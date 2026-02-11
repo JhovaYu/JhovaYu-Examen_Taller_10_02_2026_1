@@ -39,3 +39,17 @@ def consultar_doctor(id_doctor: int):
 def listar_doctores():
     doctores = service.listar_doctores()
     return [DoctorResponse(id_doctor=d.id_doctor, nombre=d.nombre, especialidad=d.especialidad) for d in doctores]
+
+@router.delete("/doctores/{id_doctor}")
+def eliminar_doctor(id_doctor: int):
+    eliminado = service.eliminar_doctor(id_doctor)
+    if not eliminado:
+        raise HTTPException(status_code=404, detail="Doctor no encontrado")
+    return {"message": "Doctor eliminado correctamente"}
+
+@router.put("/doctores/{id_doctor}", response_model=DoctorResponse)
+def actualizar_doctor(id_doctor: int, doctor: DoctorCreate):
+    doctor_actualizado = service.actualizar_doctor(id_doctor, doctor.nombre, doctor.especialidad)
+    if not doctor_actualizado:
+        raise HTTPException(status_code=404, detail="Doctor no encontrado")
+    return DoctorResponse(id_doctor=doctor_actualizado.id_doctor, nombre=doctor_actualizado.nombre, especialidad=doctor_actualizado.especialidad)

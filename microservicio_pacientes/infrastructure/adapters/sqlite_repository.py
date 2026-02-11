@@ -50,3 +50,12 @@ class SqlitePacienteRepository(PacienteRepositoryPort):
         rows = cursor.fetchall()
         conn.close()
         return [Paciente(id_paciente=row[0], nombre=row[1], email=row[2]) for row in rows]
+
+    def delete(self, id_paciente: int) -> bool:
+        conn = self._get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM pacientes WHERE id = ?", (id_paciente,))
+        changes = cursor.rowcount
+        conn.commit()
+        conn.close()
+        return changes > 0

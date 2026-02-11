@@ -39,3 +39,10 @@ def consultar_paciente(id_paciente: int):
 def listar_pacientes():
     pacientes = service.listar_pacientes()
     return [PacienteResponse(id_paciente=p.id_paciente, nombre=p.nombre, email=p.email) for p in pacientes]
+
+@router.delete("/pacientes/{id_paciente}")
+def eliminar_paciente(id_paciente: int):
+    eliminado = service.eliminar_paciente(id_paciente)
+    if not eliminado:
+        raise HTTPException(status_code=404, detail="Paciente no encontrado")
+    return {"message": "Paciente eliminado correctamente"}

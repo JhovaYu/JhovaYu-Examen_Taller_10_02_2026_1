@@ -15,3 +15,9 @@ class DoctorService:
 
     def listar_doctores(self) -> List[Doctor]:
         return self.repository.find_all()
+
+    def eliminar_doctor(self, id_doctor: int) -> bool:
+        return self.repository.delete(id_doctor)
+
+    def actualizar_doctor(self, id_doctor: int, nombre: str, especialidad: str) -> Optional[Doctor]:
+        return self.repository.update(id_doctor, nombre, especialidad)

@@ -15,3 +15,13 @@ class PacienteService:
 
     def listar_pacientes(self) -> List[Paciente]:
         return self.repository.find_all()
+
+    def eliminar_paciente(self, id_paciente: int) -> bool:
+        return self.repository.delete(id_paciente)
+    
+    def eliminar_paciente(self, id_paciente: int) -> bool:
+        return self.repository.delete(id_paciente)  
+
+    
+
+    

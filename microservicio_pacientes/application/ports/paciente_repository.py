@@ -14,3 +14,7 @@ class PacienteRepositoryPort(ABC):
     @abstractmethod
     def find_all(self) -> List[Paciente]:
         pass
+
+    @abstractmethod
+    def delete(self, id_paciente: int) -> bool:
+        pass

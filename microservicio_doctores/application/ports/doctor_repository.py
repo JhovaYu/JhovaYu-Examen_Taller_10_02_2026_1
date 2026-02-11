@@ -14,3 +14,11 @@ class DoctorRepositoryPort(ABC):
     @abstractmethod
     def find_all(self) -> List[Doctor]:
         pass
+
+    @abstractmethod
+    def delete(self, id_doctor: int) -> bool:
+        pass
+
+    @abstractmethod
+    def update(self, id_doctor: int, nombre: str, especialidad: str) -> Optional[Doctor]:
+        pass

@@ -50,3 +50,23 @@ class SqliteDoctorRepository(DoctorRepositoryPort):
         rows = cursor.fetchall()
         conn.close()
         return [Doctor(id_doctor=row[0], nombre=row[1], especialidad=row[2]) for row in rows]
+
+    def delete(self, id_doctor: int) -> bool:
+        conn = self._get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM doctores WHERE id = ?", (id_doctor,))
+        changes = cursor.rowcount
+        conn.commit()
+        conn.close()
+        return changes > 0
+
+    def update(self, id_doctor: int, nombre: str, especialidad: str) -> Optional[Doctor]:
+        conn = self._get_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE doctores SET nombre = ?, especialidad = ? WHERE id = ?", (nombre, especialidad, id_doctor))
+        changes = cursor.rowcount
+        conn.commit()
+        conn.close()
+        if changes > 0:
+            return Doctor(id_doctor=id_doctor, nombre=nombre, especialidad=especialidad)
+        return None
